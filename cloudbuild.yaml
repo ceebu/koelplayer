@@ -1,9 +1,18 @@
 steps:
-- name: Checkout the code from Github
-  uses: actions/checkout@v3
-- name: Set up the Android environment
-  uses: google/android-actions@v3
-  with:
-    sdk: google-services
-- name: Build the Apk
-  run: ./gradlew assembleRelease
+  # Checkout your code from GitHub
+  - name: 'gcr.io/cloud-builders/git'
+    args: ['clone', 'https://github.com/ceebu/koelplayer.git'] 
+
+  # Setup Android Environment 
+  - name: 'gcr.io/cloud-builders/android'
+    args: ['sdkmanager', '--licenses'] # Accept SDK licenses
+    entrypoint: bash 
+    args:
+      - '-c'
+      - |
+        sdkmanager "platforms;android-33"  # Adjust Android API if needed
+        sdkmanager "build-tools;33.0.0"    # Adjust build-tools version if needed
+
+  # Build the APK
+  - name: 'gcr.io/cloud-builders/gradle'
+    args: ['assembleRelease'] 
