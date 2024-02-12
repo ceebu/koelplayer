@@ -7,7 +7,8 @@ steps:
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'  # Or another suitable base image
   entrypoint: 'bash'
   args: 
-    - '-c'| curl https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.3-stable.tar.xz -o flutter.tar.xz && \  # Adjust Flutter version  
+    - '-c'
+    - | curl https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.7.3-stable.tar.xz -o flutter.tar.xz && \  # Adjust Flutter version  
       tar xf flutter.tar.xz && \
       ./flutter/bin/flutter pub get && \ 
       ./flutter/bin/flutter build apk --release 
