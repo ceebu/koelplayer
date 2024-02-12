@@ -1,18 +1,12 @@
 steps:
-  # Checkout your code from GitHub
-  - name: 'gcr.io/cloud-builders/git'
-    args: ['clone', 'https://github.com/ceebu/koelplayer.git'] 
+# Checkout your code
+- name: 'gcr.io/cloud-builders/git'
+  args: ['clone', 'https://github.com/ceebu/koelplayer.git'] 
 
-  # Setup Android Environment 
-  - name: 'gcr.io/cloud-builders/android'
-    args: ['sdkmanager', '--licenses'] # Accept SDK licenses
-    entrypoint: bash 
-    args:
-      - '-c'
-      - |
-        sdkmanager "platforms;android-33"  # Adjust Android API if needed
-        sdkmanager "build-tools;33.0.0"    # Adjust build-tools version if needed
+# Setup Flutter environment
+- name: 'gcr.io/cloud-builders/dart'
+  args: ['pub', 'get'] # Get Flutter dependencies
 
-  # Build the APK
-  - name: 'gcr.io/cloud-builders/gradle'
-    args: ['assembleRelease'] 
+# Build the APK
+- name: 'gcr.io/cloud-builders/dart'
+  args: ['flutter', 'build', 'apk', '--release']
